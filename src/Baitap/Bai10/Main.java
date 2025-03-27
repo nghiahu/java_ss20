@@ -29,6 +29,12 @@ public class Main {
         System.out.println(tasks.stream().filter(task -> task.isCompleted()).count());
         System.out.println(" ");
         System.out.println("== Thống kê công việc theo người dùng ==");
-        Map<String, Long> mapTask = tasks.stream().collect(Collectors.groupingBy(Task::getTitle, Collectors.counting()));
+        Map<User, Long> mapTask = tasks.stream().collect(Collectors.groupingBy(Task::getAssingedTo, Collectors.counting()));
+
+        for (Map.Entry<User, Long> entry : mapTask.entrySet()) {
+            long countDue = tasks.stream().filter(task ->task.getAssingedTo().equals(entry.getKey()) && !task.isCompleted() && task.getDueDate().isBefore(LocalDate.parse("2025-03-23"))).count();
+            System.out.println("Tên: " + entry.getKey().getName() +
+                    " | Email: " + entry.getKey().prindEmail() + " | Tổng việc: " + entry.getValue() + " | Quá hạn: " + countDue);
+        }
     }
 }

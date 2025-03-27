@@ -39,4 +39,11 @@ public class User {
     public void setEmail(Optional<String> email) {
         this.email = email;
     }
+    public String prindEmail() {
+        if (this.email.isPresent()) {
+            return this.email.get();
+        }else {
+            return "Không có email";
+        }
+    }
 }
